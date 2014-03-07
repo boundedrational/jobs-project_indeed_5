@@ -53,18 +53,39 @@ for element in states
   ct.clear
   st.clear
   et.clear
+  
+  
 
   while j<=resultslimit
     g=0        
     if j==0
              while c<=resultslimit
-                long_url= "http://www.jobgymn.com/makefulltextfeed.php?url=rss.indeed.com%2Frss%3Fq%3D%26l%3D" + url_state + "%26sort%3Ddate%26start%3D"+c.to_s()+"&max=2000&links=preserve&exc=&submit=Create+Feed"
+                long_url= "http://fullrss.net/a/http/rss.indeed.com/rss?q=&l=" + url_state + "california&sort=date&start="+c.to_s()+
                 scraping = Nokogiri::XML(open(long_url))
                 
                 scraping.css("item").each do |result|
-                  title=result.css('link').inner_html
+                  identification=result.css('link').inner_html
+                  identification.to_s()
+                  ident.gsub!(/.*_/im, "")
                   text=result.css("description").inner_html
                   timing=result.css("pubDate").inner_html
+                  
+                  begin
+                    long_content=result.css("content:encoded").inner_html
+                  rescue
+                  end
+                  begin
+                
+                    id=result.css("guid").inner_html
+                  rescue
+                  end
+                  begin
+                    map=result.css("georss:point").inner_html
+                    employer=result.css("source").inner_html          
+                  rescue
+                  end
+   
+
   
                   text=Sanitize.clean(text)
                   text.gsub!(/&lt.*?&gt;/im, "")
@@ -156,6 +177,7 @@ for element in states
             "srcid"=>'',
             "efccid"=>'',
             "cmpid"=>'',
+            "geo"=>'',
 
 
           }
