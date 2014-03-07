@@ -15,7 +15,7 @@ queries=[]
 states=['North+Carolina',  'Pennsylvania',  'West+Virginia',  'Mississippi', 'Kentucky',  'North+Dakota', 'Massachusetts',   'New+Hampshire']
 counts = Hash.new(0)
 
-queryurl="http://www.indeed.com/jobs?q="
+queryurl="http://www.indeed.com/jobs?"
 ht = Hash.new {|h,k| h[k]=[]}
 tt = Hash.new {|h,k| h[k]=[]}
 gt = Hash.new {|h,k| h[k]=[]}
@@ -26,7 +26,7 @@ et = Hash.new {|h,k| h[k]=[]}
 t='<script type="text/javascript"> function rclk('
 
 for element in states
- helpurl=queryurl+"&l="+element+"&sort=date"
+ helpurl=queryurl+"l="+element+"&sort=date"
   puts queryurl
     doc = Nokogiri::HTML(open(URI::encode(helpurl)))
   resultstotal=doc.search("div[@id='searchCount']").inner_html
