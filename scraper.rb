@@ -42,7 +42,6 @@ for element in states
   puts element
   resultslimit=1000
   url_state=element
-  url_state.gsub!(/[+]/,"%2B")
 
   j=0
   checkAgainst = ['']
@@ -66,6 +65,7 @@ for element in states
                 scraping = Nokogiri::XML(open(long_url))
                 
                 scraping.css("item").each do |result|
+                  puts "try"
                   identification=result.css('link').inner_html
                   identification.to_s()
                   identification=identification.split("-").last
