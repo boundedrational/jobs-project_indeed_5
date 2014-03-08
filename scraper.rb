@@ -14,7 +14,6 @@ require 'sanitize'
 queries=[]
 states=['North+Carolina',  'Pennsylvania',  'West+Virginia',  'Mississippi', 'Kentucky',  'North+Dakota', 'Massachusetts',   'New+Hampshire']
 counts = Hash.new(0)
-
 queryurl="http://www.indeed.com/jobs?"
 ht = Hash.new {|h,k| h[k]=[]}
 tt = Hash.new {|h,k| h[k]=[]}
@@ -61,7 +60,8 @@ for element in states
     g=0        
     if j==0
              while c<=resultslimit
-                long_url= "http://fullrss.net/a/http/rss.indeed.com/rss?q=&l=" + url_state + "california&sort=date&start="+c.to_s()
+                long_url= "http://fullrss.net/a/http/rss.indeed.com/rss?q=&l=" + url_state + "&sort=date&start="+c.to_s()
+                puts long_url
                 scraping = Nokogiri::XML(open(long_url))
                 
                 scraping.css("item").each do |result|
@@ -116,6 +116,7 @@ for element in states
  
 
     pageurl = helpurl+"&start="+j.to_s()
+    puts pageurl
     page = Nokogiri::HTML(open(URI::encode(pageurl)))
     use= page.search("body")
     use=use.to_s()
