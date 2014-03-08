@@ -22,6 +22,7 @@ gt = Hash.new {|h,k| h[k]=[]}
 ct = Hash.new {|h,k| h[k]=[]}
 st = Hash.new {|h,k| h[k]=[]}
 et = Hash.new {|h,k| h[k]=[]}
+geo = Hash.new {|h,k| h[k]=[]}
 
 t='<script type="text/javascript"> function rclk('
 
@@ -53,6 +54,7 @@ for element in states
   ct.clear
   st.clear
   et.clear
+  geo.clear
   
   
 
@@ -66,7 +68,8 @@ for element in states
                 scraping.css("item").each do |result|
                   identification=result.css('link').inner_html
                   identification.to_s()
-                  ident.gsub!(/.*_/im, "")
+                  identification=identification.split("-").last
+                  puts identification
                   text=result.css("description").inner_html
                   timing=result.css("pubDate").inner_html
                   
@@ -76,7 +79,7 @@ for element in states
                   end
                   begin
                 
-                    id=result.css("guid").inner_html
+                    some_id=result.css("guid").inner_html
                   rescue
                   end
                   begin
@@ -96,8 +99,13 @@ for element in states
   
           
                   title=title.to_s()
-                  ht[title]<< text
-                  tt[title]<< timing
+                  begin
+                   ht[identification]<< long_content
+                  rescue
+                   ht[identification]<< text
+                  end
+                  tt[identification]<< timing
+                  geo[identification]<< map
   
                   c=c+resultsperpage
                 end
@@ -196,6 +204,7 @@ for element in states
               if ht.has_key?(ident)
                 data["long_description"]=ht[ident]
                 data["long_timing"]=tt[ident]
+                data["geo"]=geo[ident]
                 
               end
               s=''
